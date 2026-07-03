@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تأسيسي — Deutsch A1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2ECDD;
+  --paper-dark:#E8DFC8;
+  --ink:#241E17;
+  --ink-soft:#5A5142;
+  --rot:#B3311B;
+  --gold:#B8862E;
+  --gruen:#2E5E45;
+  --blau:#1B4B6B;
+  --line:#C9BE9E;
+  --card:#FBF8EF;
+  --shadow:0 2px 0 rgba(36,30,23,0.08);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Cairo',sans-serif;
+  min-height:100vh;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(179,49,27,0.04), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(27,75,107,0.05), transparent 40%);
+}
+.de{font-family:'Fraunces',serif; direction:ltr; unicode-bidi:isolate;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ===== Top bar ===== */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:var(--paper);
+  border-bottom:2px solid var(--ink);
+  padding:14px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand-mark{
+  width:38px; height:38px; border-radius:50%;
+  background:conic-gradient(from 180deg, var(--rot) 0 33%, var(--ink) 33% 66%, var(--gold) 66% 100%);
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow);
+}
+.brand-mark span{
+  width:26px; height:26px; border-radius:50%; background:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces',serif; font-weight:900; font-size:13px; color:var(--ink);
+}
+.brand-text{line-height:1.1;}
+.brand-text b{display:block; font-size:17px; font-weight:800;}
+.brand-text small{font-size:11px; color:var(--ink-soft); font-family:'Fraunces',serif; font-style:italic; direction:ltr; display:block;}
+
+.progress-chip{
+  display:flex; align-items:center; gap:8px;
+  background:var(--card); border:1.5px solid var(--ink); border-radius:100px;
+  padding:6px 14px 6px 8px;
+  font-size:13px; font-weight:700;
+}
+.progress-ring{width:24px; height:24px; flex-shrink:0;}
+
+/* ===== Hero ===== */
+.hero{
+  padding:56px 20px 40px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-eyebrow{
+  font-size:12px; letter-spacing:0.12em; color:var(--rot); font-weight:700;
+  margin-bottom:14px; text-transform:uppercase;
+}
+.hero h1{
+  font-family:'Fraunces',serif; font-weight:900; font-size:clamp(32px,7vw,58px);
+  line-height:1.05; direction:ltr; margin-bottom:10px;
+}
+.hero h1 .accent{color:var(--rot); font-style:italic;}
+.hero p.sub{
+  font-size:16px; color:var(--ink-soft); max-width:520px; margin:0 auto 28px;
+  line-height:1.7;
+}
+.hero-stats{
+  display:flex; justify-content:center; gap:28px; flex-wrap:wrap; margin-top:8px;
+}
+.hero-stat{text-align:center;}
+.hero-stat b{font-family:'Fraunces',serif; font-size:28px; display:block; font-weight:800;}
+.hero-stat span{font-size:12px; color:var(--ink-soft);}
+
+/* ===== Chapters grid (the "notebook") ===== */
+.notebook{
+  max-width:1000px; margin:0 auto; padding:0 20px 80px;
+}
+.chapters-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px; margin-top:24px;
+}
+.chapter-card{
+  background:var(--card);
+  border:2px solid var(--ink);
+  border-radius:14px;
+  padding:20px;
+  position:relative;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+  box-shadow:4px 4px 0 rgba(36,30,23,0.12);
+  overflow:hidden;
+}
+.chapter-card:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 rgba(36,30,23,0.16);}
+.chapter-card.locked{
+  cursor:not-allowed;
+  opacity:0.55;
+  filter:grayscale(0.4);
+}
+.chapter-card.locked:hover{transform:none; box-shadow:4px 4px 0 rgba(36,30,23,0.12);}
+.chapter-num{
+  font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;
+}
+.chapter-status{
+  font-size:16px;
+}
+.chapter-de{
+  font-family:'Fraunces',serif; font-weight:700; font-size:21px; direction:ltr; margin-bottom:4px;
+}
+.chapter-ar{font-size:14px; color:var(--ink-soft); margin-bottom:14px;}
+.chapter-score{
+  font-size:12px; font-weight:700; padding:4px 10px; border-radius:100px;
+  display:inline-block;
+}
+.score-none{background:var(--paper-dark); color:var(--ink-soft);}
+.score-pass{background:#DCEAE0; color:var(--gruen);}
+.score-fail{background:#F4DAD5; color:var(--rot);}
+.chapter-bar{
+  height:5px; background:var(--paper-dark); border-radius:100px; margin-top:12px; overflow:hidden;
+}
+.chapter-bar-fill{height:100%; background:var(--gold); border-radius:100px; transition:width .4s ease;}
+
+/* ===== Chapter detail view ===== */
+.view{display:none;}
+.view.active{display:block;}
+#home-view.active{display:block;}
+
+.chapter-header{
+  max-width:900px; margin:0 auto; padding:28px 20px 10px;
+}
+.back-btn{
+  background:none; border:none; color:var(--ink-soft); font-family:'Cairo',sans-serif;
+  font-size:14px; cursor:pointer; display:flex; align-items:center; gap:6px; margin-bottom:18px;
+  font-weight:700;
+}
+.back-btn:hover{color:var(--ink);}
+.chapter-title-block{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px;
+}
+.chapter-title-block .de{font-size:clamp(28px,5vw,42px); font-weight:800;}
+.chapter-title-block .ar{font-size:18px; color:var(--ink-soft); font-weight:600;}
+.chapter-eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--rot); font-weight:700; letter-spacing:0.05em;}
+
+.tabs{
+  display:flex; gap:6px; max-width:900px; margin:22px auto 0; padding:0 20px;
+  border-bottom:2px solid var(--ink);
+  overflow-x:auto;
+}
+.tab-btn{
+  background:none; border:none; font-family:'Cairo',sans-serif; font-weight:700;
+  font-size:14px; padding:12px 18px; cursor:pointer; color:var(--ink-soft);
+  border-bottom:3px solid transparent; margin-bottom:-2px; white-space:nowrap;
+  display:flex; align-items:center; gap:6px;
+}
+.tab-btn.active{color:var(--ink); border-bottom-color:var(--rot);}
+.tab-btn:hover:not(.active){color:var(--ink);}
+
+.tab-content{max-width:900px; margin:0 auto; padding:32px 20px 80px;}
+.skill-panel{display:none;}
+.skill-panel.active{display:block; animation:fadein .3s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+.panel-block{
+  background:var(--card); border:2px solid var(--ink); border-radius:14px;
+  padding:26px; margin-bottom:20px; box-shadow:var(--shadow);
+}
+.panel-block h3{
+  font-family:'Fraunces',serif; font-size:18px; font-weight:700; margin-bottom:14px;
+  display:flex; align-items:center; gap:8px;
+}
+.panel-block h3::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--rot); flex-shrink:0;}
+.de-text{
+  font-family:'Fraunces',serif; direction:ltr; text-align:left; font-size:17px; line-height:1.9;
+  white-space:pre-line; color:var(--ink); background:var(--paper); border-radius:10px;
+  padding:18px 20px; border:1px solid var(--line);
+}
+.ar-explain{
+  font-size:15px; line-height:1.9; color:var(--ink-soft); margin-top:16px;
+}
+.ar-explain b{color:var(--ink);}
+
+.vocab-grid{
+  display:grid; grid-template-columns:1fr; gap:8px; margin-top:16px;
+}
+.vocab-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px; background:var(--paper); border-radius:8px; border:1px solid var(--line);
+}
+.vocab-de{font-family:'Fraunces',serif; direction:ltr; font-weight:600; font-size:15px;}
+.vocab-ar{font-size:14px; color:var(--ink-soft);}
+
+.dialog-block{margin-top:14px;}
+.dialog-line{
+  display:flex; gap:10px; margin-bottom:10px; align-items:baseline;
+}
+.dialog-speaker{
+  font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--rot);
+  min-width:38px; flex-shrink:0;
+}
+.dialog-text{font-family:'Fraunces',serif; direction:ltr; font-size:16px;}
+
+.example-block{
+  background:var(--paper); border-right:3px solid var(--gold); border-radius:8px;
+  padding:14px 16px; margin-top:14px;
+}
+.example-label{font-size:11px; color:var(--gold); font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em;}
+
+/* Quiz gate */
+.quiz-gate{
+  text-align:center; padding:40px 20px;
+}
+.quiz-gate .lock-icon{font-size:48px; margin-bottom:16px;}
+.quiz-gate h3{font-family:'Fraunces',serif; font-size:22px; margin-bottom:10px;}
+.quiz-gate p{color:var(--ink-soft); font-size:14px; max-width:400px; margin:0 auto;}
+
+.btn{
+  background:var(--ink); color:var(--paper); border:none; border-radius:100px;
+  padding:13px 28px; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px;
+  cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+  transition:transform .12s ease, box-shadow .12s ease;
+  box-shadow:3px 3px 0 rgba(36,30,23,0.2);
+}
+.btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 rgba(36,30,23,0.25);}
+.btn:active{transform:translate(0,0); box-shadow:1px 1px 0 rgba(36,30,23,0.2);}
+.btn.secondary{background:var(--card); color:var(--ink); border:2px solid var(--ink); box-shadow:3px 3px 0 rgba(36,30,23,0.12);}
+.btn.full{width:100%; justify-content:center;}
+.btn:disabled{opacity:0.5; cursor:not-allowed;}
+
+/* Quiz UI */
+.quiz-wrap{max-width:700px; margin:0 auto;}
+.quiz-progress-bar{
+  height:8px; background:var(--paper-dark); border-radius:100px; overflow:hidden; margin-bottom:24px;
+  border:1px solid var(--line);
+}
+.quiz-progress-fill{height:100%; background:var(--rot); transition:width .3s ease;}
+.quiz-meta{display:flex; justify-content:space-between; font-size:13px; color:var(--ink-soft); margin-bottom:8px; font-family:'JetBrains Mono',monospace;}
+.q-card{
+  background:var(--card); border:2px solid var(--ink); border-radius:14px; padding:28px;
+  box-shadow:var(--shadow);
+}
+.q-text{font-size:18px; font-weight:700; margin-bottom:20px; line-height:1.7;}
+.q-options{display:flex; flex-direction:column; gap:10px;}
+.q-option{
+  background:var(--paper); border:2px solid var(--line); border-radius:10px;
+  padding:14px 18px; text-align:right; font-family:'Cairo',sans-serif; font-size:15px;
+  cursor:pointer; transition:all .15s ease;
+}
+.q-option:hover{border-color:var(--ink);}
+.q-option.selected{border-color:var(--blau); background:#E4EEF4;}
+.q-option.correct{border-color:var(--gruen); background:#DCEAE0; font-weight:700;}
+.q-option.wrong{border-color:var(--rot); background:#F4DAD5; font-weight:700;}
+.q-option:disabled{cursor:default;}
+.q-nav{display:flex; justify-content:space-between; margin-top:24px; align-items:center;}
+
+.quiz-result{text-align:center; padding:40px 20px;}
+.result-circle{
+  width:140px; height:140px; border-radius:50%; margin:0 auto 24px;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  border:4px solid var(--ink);
+}
+.result-circle b{font-family:'Fraunces',serif; font-size:36px;}
+.result-circle span{font-size:12px; color:var(--ink-soft);}
+.result-pass{background:#DCEAE0; border-color:var(--gruen);}
+.result-fail{background:#F4DAD5; border-color:var(--rot);}
+.result-msg{font-family:'Fraunces',serif; font-size:22px; font-weight:700; margin-bottom:10px;}
+.result-sub{color:var(--ink-soft); font-size:14px; margin-bottom:28px;}
+.result-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+
+footer{
+  text-align:center; padding:30px 20px 50px; color:var(--ink-soft); font-size:13px;
+}
+
+@media (max-width:640px){
+  .hero{padding:40px 16px 30px;}
+  .chapters-grid{grid-template-columns:1fr;}
+  .tabs{gap:2px;}
+  .tab-btn{padding:10px 12px; font-size:13px;}
+  .panel-block{padding:18px;}
+}
+
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);}
+:focus-visible{outline:3px solid var(--blau); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><span>A1</span></div>
+    <div class="brand-text">
+      <b>تأسيسي</b>
+      <small>Deutsch A1 — Grundkurs</small>
+    </div>
+  </div>
+  <div class="progress-chip">
+    <svg class="progress-ring" viewBox="0 0 36 36" id="header-ring">
+      <circle cx="18" cy="18" r="15.5" fill="none" stroke="#E8DFC8" stroke-width="4"/>
+      <circle cx="18" cy="18" r="15.5" fill="none" stroke="#B3311B" stroke-width="4" stroke-linecap="round"
+        id="header-ring-fill" stroke-dasharray="97.4" stroke-dashoffset="97.4" transform="rotate(-90 18 18)"/>
+    </svg>
+    <span id="header-progress-text">0 / 12</span>
+  </div>
+</div>
+
+<div id="home-view" class="view active">
+  <section class="hero">
+    <div class="hero-eyebrow">Grundkurs · المستوى الأول</div>
+    <h1>Deutsch von <span class="accent">Null</span> an</h1>
+    <p class="sub">اتعلمي الألمانية من الصفر — 12 كابيتل متدرجة حسب معيار الاتحاد الأوروبي CEFR للمستوى A1، كل كابيتل فيه قراءة واستماع ومحادثة وكتابة، وكويز 30 سؤال لازم تعدي 60% منه عشان تفتحي اللي بعده.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>12</b><span>كابيتل</span></div>
+      <div class="hero-stat"><b>360</b><span>سؤال كويز</span></div>
+      <div class="hero-stat"><b>48</b><span>تمرين مهارة</span></div>
+      <div class="hero-stat"><b>60%</b><span>نسبة النجاح المطلوبة</span></div>
+    </div>
+  </section>
+
+  <div class="notebook">
+    <div class="chapters-grid" id="chapters-grid"></div>
+  </div>
+</div>
+
+<div id="chapter-view" class="view">
+  <div class="chapter-header">
+    <button class="back-btn" onclick="goHome()">→ رجوع لكل الكباتل</button>
+    <div class="chapter-eyebrow" id="ch-eyebrow"></div>
+    <div class="chapter-title-block">
+      <span class="de" id="ch-title-de"></span>
+      <span class="ar" id="ch-title-ar"></span>
+    </div>
+  </div>
+  <div class="tabs" id="ch-tabs"></div>
+  <div class="tab-content" id="ch-content"></div>
+</div>
+
+<footer>تأسيسي — منهج تعليم اللغة الألمانية · مستوى A1 حسب معيار الإطار الأوروبي المرجعي المشترك للغات (CEFR)</footer>
+
+<script src="content.js"></script>
+<script src="quizzes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
